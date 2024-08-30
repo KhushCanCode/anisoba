@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+  background-color: #020617;
+  color:white;
+}
+
+.slide{
+  position: relative;
+  height:100vh;
+
+}
+
+
+.carousel .control-dots {
+  bottom: 10px; 
+  
+}
+
+.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-prev {
+  
+  color:white;
+  z-index:20;
+  background-color: #00000076;
+
+
+}
+.custom-swiper-navigation .swiper-button-next{
+  right:0;
+}
+.custom-swiper-navigation .swiper-button-prev{
+  left:0;
+}
+
+.custom-swiper-navigation .swiper-button-next::after,
+.custom-swiper-navigation .swiper-button-prev::after {
+  font-size: 1.2rem; 
+  font-weight: 800;
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .slide{
+    height:50vh;
+  }
+  .carousel .control-dots {
+    bottom: 10px; 
+    visibility: hidden;
+  }
+  .custom-swiper-navigation .swiper-button-next::after,
+  .custom-swiper-navigation .swiper-button-prev::after {
+  font-size: 1rem; 
+  font-weight: 800;
+}
+}
+
+
+
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .slide{
+    height:50vh;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .slide{
+    height:50vh;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .slide{
+    height:100vh;
+  }
+}
+
+
