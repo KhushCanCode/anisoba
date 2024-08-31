@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-import { useNavigate } from "react-router-dom";
 
 function Stream() {
   const { episodeId } = useParams();
@@ -22,7 +21,6 @@ function Stream() {
 
   const fetchVideoData = async () => {
     try {
-      setLoading(true);
       const response = await axios.get(
         `https://vodbackend.vercel.app/anime/episode-srcs?id=${encodeURIComponent(
           episodeId
@@ -46,21 +44,17 @@ function Stream() {
 
   const fetchAnimeData = async () => {
     try {
-      setLoading(true);
       const resp = await axios.get(
         `https://vodbackend.vercel.app/anime/info?id=${animeId}`
       );
       setAnimeData(resp.data);
     } catch (error) {
       console.error("Error fetching anime data:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
   const fetchAnimeEpisodes = async () => {
     try {
-      setLoading(true);
       const resp = await axios.get(
         `https://vodbackend.vercel.app/anime/episodes/${animeId}`
       );
@@ -69,8 +63,6 @@ function Stream() {
       setTotalEpisodes(data.totalEpisodes);
     } catch (error) {
       console.error("Error fetching anime episodes:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -78,36 +70,43 @@ function Stream() {
     fetchAnimeEpisodes();
     fetchVideoData();
     fetchAnimeData();
+    setLoading(false); // Set loading to false only after all data is fetched
   }, [episodeId, category]);
 
-  const animeClicked = (animeId) => {
+  const animeClicked = useCallback((animeId) => {
     navigate(`/anime/${animeId}`);
-  };
+  }, [navigate]);
 
-  const handleCategoryChange = (event) => {
+  const handleCategoryChange = useCallback((event) => {
     if (playerRef.current) {
       setPlayed(playerRef.current.getCurrentTime());
     }
     setCategory(event.target.value);
-  };
+  }, []);
 
-  const episodeClicked = (episodeId) => {
+  // const handleCaptionChange = useCallback((event) => {
+  //   if (playerRef.current) {
+  //     setPlayed(playerRef.current.getCurrentTime());
+  //   }
+  //   setSelectedCaption(event.target.value);
+  // }, []);
+
+  const episodeClicked = useCallback((episodeId) => {
     navigate(`/stream/${encodeURIComponent(episodeId)}`);
-  };
-  
+  }, [navigate]);
 
   useEffect(() => {
     if (playerRef.current && played > 0) {
       playerRef.current.seekTo(played);
     }
-  }, [videoSrc]);
+  }, [videoSrc, played]);
 
   const currentEpisode = animeEpisodes.find((ep) => ep.episodeId === episodeId);
   const nextEpisode = animeEpisodes.find(
     (ep) => ep.number === currentEpisode?.number + 1
   );
 
-  const { info, moreInfo } = animeData?.anime || {};
+  const { info } = animeData?.anime || {};
 
   if (loading) {
     return (
@@ -141,80 +140,95 @@ function Stream() {
                 attributes: {
                   crossOrigin: "anonymous",
                 },
-                tracks: captions.map((track, index) => ({
-                  kind: track.kind,
-                  src: track.file,
-                  srcLang: track.label,
-                  default: track.default || false,
-                })),
+                tracks: captions
+                  .filter((track) => track.file === selectedCaption)
+                  .map((track) => ({
+                    kind: track.kind,
+                    src: track.file,
+                    srcLang: track.label,
+                    default: true,
+                  })),
               },
             }}
             onProgress={({ playedSeconds }) => setPlayed(playedSeconds)}
           />
 
-          <div className=" mb-5">
-
-            {/* Anime Data */}
+          <div className="mb-5">
             <div className="mt-1 lg:mt-4">
+              <div className="titleandSub flex justify-between gap-2">
+                <h1 className="text-xl lg:text-3xl font-semibold">
+                  Episode {currentEpisode?.number} | {currentEpisode?.title}
+                </h1>
 
-              <div className="titleandSub flex justify-between">
 
-              <h1 className="text-xl lg:text-3xl font-semibold">
-                Episode {currentEpisode?.number} | {currentEpisode?.title}
-              </h1>
-                {/*Category Option*/}
-              <div className="text-sm">
+              <div className="">
+              <div className="text-sm mt-1">
+                  <select
+                    value={category}
+                    onChange={handleCategoryChange}
+                    className="p-1 mt-1 lg:p-2 bg-slate-800 text-white rounded"
+                  >
+                    <option value="sub">Sub</option>
+                    <option value="dub">Dub</option>
+                  </select>
+                </div>
+
+                {/* <div className="text-sm mt-1 ">
                 <select
-                  value={category}
-                  onChange={handleCategoryChange}
+                  value={selectedCaption}
+                  onChange={handleCaptionChange}
                   className="p-1 mt-1 lg:p-2 bg-slate-800 text-white rounded"
                 >
-                  <option value="sub" >Sub</option>
-                  <option value="dub">Dub</option>
+                  {captions.map((caption) => (
+                    <option key={caption.file} value={caption.file}>
+                      {caption.label}
+                    </option>
+                  ))}
                 </select>
+              </div> */}
+              </div>
+               
               </div>
 
-              </div>
               
+
               <button
-                className="text-base lg:text-xl text-gray-500 mt-1 border-b border-slate-950 hover:border-green-500 hover:border-b hover:text-green-500 "
+                className="text-base lg:text-xl text-gray-500 mt-1 border-b border-slate-950 hover:border-green-500 hover:border-b hover:text-green-500"
                 onClick={() => animeClicked(animeId)}
               >
                 {info?.name}
               </button>
 
-                
-
-                {info?.stats?.episodes?.sub && info?.stats?.episodes?.dub ? (
-                  <p className="text-gray-500 text-xs">Sub | Dub</p>
-                ) : info?.stats?.episodes?.sub ? (
-                  <p className="text-gray-500 text-xs">Sub</p>
-                ) : info?.stats?.episodes?.dub ? (
-                  <p className="text-gray-500 text-xs">Dub</p>
-                ) : (
-                  <p className="text-gray-500 text-xs">Not Available</p>
-                )}
+              {info?.stats?.episodes?.sub && info?.stats?.episodes?.dub ? (
+                <p className="text-gray-500 text-xs">Sub | Dub</p>
+              ) : info?.stats?.episodes?.sub ? (
+                <p className="text-gray-500 text-xs">Sub</p>
+              ) : info?.stats?.episodes?.dub ? (
+                <p className="text-gray-500 text-xs">Dub</p>
+              ) : (
+                <p className="text-gray-500 text-xs">Not Available</p>
+              )}
             </div>
-
           </div>
-          
+
           <div className="w-full lg:w-1/2 ">
-              {/* Next Episode Link */}
-              <h2 className="text-green-500 text-lg lg:text-xl font-bold ">Next Episode</h2>
-              {nextEpisode && (
-                <li key={nextEpisode.episodeId}
+            <h2 className="text-green-500 text-lg lg:text-xl font-bold">
+              Next Episode
+            </h2>
+            {nextEpisode && (
+              <li
+                key={nextEpisode.episodeId}
                 onClick={() => episodeClicked(nextEpisode.episodeId)}
                 className="cursor-pointer bg-slate-900 my-2 px-2 py-4 rounded gap-2 flex justify-between items-center hover:bg-green-700"
-            >
-              <p>Ep-{nextEpisode.number} {nextEpisode.title}</p>
-              <i className="fa-solid fa-caret-right text-green-500 pr-2"></i>
-            </li>
-              )}
-              
-            
-            </div>
+              >
+                <p>
+                  Ep-{nextEpisode.number} {nextEpisode.title}
+                </p>
+                <i className="fa-solid fa-caret-right text-green-500 pr-2"></i>
+              </li>
+            )}
           </div>
-          
+        </div>
       )}
     </div>
   );
