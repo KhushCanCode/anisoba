@@ -28,7 +28,7 @@ function Header() {
     <>
         <nav
           id="navbar"
-          className={`px-4 lg:px-6 py-2.5 fixed top-0 z-10 w-full transition-all duration-300 ${
+          className={`px-4 lg:px-6 py-2.5 fixed top-0 z-30 w-full transition-all duration-300 ${
             isScrolled ? 'bg-opacity-70 backdrop-blur-md' : 'bg-transparent'
           }`}
         >
@@ -52,14 +52,14 @@ function Header() {
             </button>
           </div>
 
-          <div className={`justify-between items-center w-full   lg:flex lg:w-auto lg:order-1 ${isMenuOpen ? 'block bg-slate-950' : 'hidden'}`} id="mobile-menu-2">
-            <ul className="flex flex-col self-start mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+          <div className={`justify-between items-center w-full lg:flex lg:w-auto lg:order-1 ${isMenuOpen ? 'block bg-slate-900 rounded p-1' : 'hidden'}`} id="mobile-menu-2">
+            <ul className="flex flex-col self-start  font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               
               <li>
-                <Link to="/categories" className="block py-2 pr-4 pl-3 text-slate-200 rounded-3xl transition hover:backdrop-blur-sm ">Categories</Link>
+                <Link to="/categories" className="block py-2 pr-4 pl-3 text-slate-200 lg:rounded-3xl transition  lg:hover:backdrop-blur-sm  ">Categories</Link>
               </li>
               <li>
-                <Link to="/genres/:genreId" className="block py-2 pr-4 pl-3 text-slate-200 rounded-3xl transition hover:backdrop-blur-sm ">Genres</Link>
+                <Link to="/genres/:genreId" className="block py-2 pr-4 pl-3 text-slate-200 lg:rounded-3xl transition   lg:hover:backdrop-blur-sm ">Genres</Link>
               </li>
             </ul>
           </div>
