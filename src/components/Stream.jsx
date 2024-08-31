@@ -10,7 +10,6 @@ function Stream() {
   const [error, setError] = useState(null);
   const [category, setCategory] = useState("sub");
   const [captions, setCaptions] = useState([]);
-  const [selectedCaption, setSelectedCaption] = useState(null);
   const playerRef = useRef(null);
   const [played, setPlayed] = useState(0);
   const [animeData, setAnimeData] = useState(null);
@@ -19,6 +18,7 @@ function Stream() {
   const navigate = useNavigate();
   const animeId = episodeId.split("?")[0];
 
+  // Fetch Video Data with English Captions Only
   const fetchVideoData = async () => {
     try {
       const response = await axios.get(
@@ -28,20 +28,22 @@ function Stream() {
       );
       if (response.data.sources && response.data.sources.length > 0) {
         setVideoSrc(response.data.sources[0].url);
-        setCaptions(response.data.tracks || []);
-        setSelectedCaption(
-          response.data.tracks?.find((track) => track.default)?.file || null
-        ); // Set default caption
+
+        // Filter to get only the English track
+        const englishTrack = response.data.tracks?.find(
+          (track) => track.label === "english"
+        );
+
+        setCaptions(englishTrack ? [englishTrack] : []);
       } else {
         setError("No video source found in the response");
       }
     } catch (error) {
       setError(`Error fetching video data: ${error.message}`);
-    } finally {
-      setLoading(false);
     }
   };
 
+  // Fetch Anime Info
   const fetchAnimeData = async () => {
     try {
       const resp = await axios.get(
@@ -53,6 +55,7 @@ function Stream() {
     }
   };
 
+  // Fetch Anime Episodes
   const fetchAnimeEpisodes = async () => {
     try {
       const resp = await axios.get(
@@ -66,17 +69,25 @@ function Stream() {
     }
   };
 
+  // Fetch All Data in Parallel
   useEffect(() => {
-    fetchAnimeEpisodes();
-    fetchVideoData();
-    fetchAnimeData();
-    setLoading(false); // Set loading to false only after all data is fetched
+    const fetchAllData = async () => {
+      setLoading(true);
+      await Promise.all([fetchAnimeEpisodes(), fetchVideoData(), fetchAnimeData()]);
+      setLoading(false);
+    };
+    fetchAllData();
   }, [episodeId, category]);
 
-  const animeClicked = useCallback((animeId) => {
-    navigate(`/anime/${animeId}`);
-  }, [navigate]);
+  // Navigate to Anime Page
+  const animeClicked = useCallback(
+    (animeId) => {
+      navigate(`/anime/${animeId}`);
+    },
+    [navigate]
+  );
 
+  // Handle Category Change (Sub/Dub)
   const handleCategoryChange = useCallback((event) => {
     if (playerRef.current) {
       setPlayed(playerRef.current.getCurrentTime());
@@ -84,26 +95,25 @@ function Stream() {
     setCategory(event.target.value);
   }, []);
 
-  // const handleCaptionChange = useCallback((event) => {
-  //   if (playerRef.current) {
-  //     setPlayed(playerRef.current.getCurrentTime());
-  //   }
-  //   setSelectedCaption(event.target.value);
-  // }, []);
+  // Navigate to Another Episode
+  const episodeClicked = useCallback(
+    (episodeId) => {
+      navigate(`/stream/${encodeURIComponent(episodeId)}`);
+    },
+    [navigate]
+  );
 
-  const episodeClicked = useCallback((episodeId) => {
-    navigate(`/stream/${encodeURIComponent(episodeId)}`);
-  }, [navigate]);
-
+  // Seek to the Last Played Time When Video Source Changes
   useEffect(() => {
     if (playerRef.current && played > 0) {
       playerRef.current.seekTo(played);
     }
-  }, [videoSrc, played]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoSrc]); // Removed 'played' from dependencies to prevent infinite loop
 
   const currentEpisode = animeEpisodes.find((ep) => ep.episodeId === episodeId);
   const nextEpisode = animeEpisodes.find(
-    (ep) => ep.number === currentEpisode?.number + 1
+    (ep) => ep.number === (currentEpisode?.number || 0) + 1
   );
 
   const { info } = animeData?.anime || {};
@@ -140,14 +150,12 @@ function Stream() {
                 attributes: {
                   crossOrigin: "anonymous",
                 },
-                tracks: captions
-                  .filter((track) => track.file === selectedCaption)
-                  .map((track) => ({
-                    kind: track.kind,
-                    src: track.file,
-                    srcLang: track.label,
-                    default: true,
-                  })),
+                tracks: captions.map((track) => ({
+                  kind: track.kind,
+                  src: track.file,
+                  srcLang: track.label,
+                  default: true,
+                })),
               },
             }}
             onProgress={({ playedSeconds }) => setPlayed(playedSeconds)}
@@ -160,9 +168,7 @@ function Stream() {
                   Episode {currentEpisode?.number} | {currentEpisode?.title}
                 </h1>
 
-
-              <div className="">
-              <div className="text-sm mt-1">
+                <div className="text-sm mt-1">
                   <select
                     value={category}
                     onChange={handleCategoryChange}
@@ -172,25 +178,7 @@ function Stream() {
                     <option value="dub">Dub</option>
                   </select>
                 </div>
-
-                {/* <div className="text-sm mt-1 ">
-                <select
-                  value={selectedCaption}
-                  onChange={handleCaptionChange}
-                  className="p-1 mt-1 lg:p-2 bg-slate-800 text-white rounded"
-                >
-                  {captions.map((caption) => (
-                    <option key={caption.file} value={caption.file}>
-                      {caption.label}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
               </div>
-               
-              </div>
-
-              
 
               <button
                 className="text-base lg:text-xl text-gray-500 mt-1 border-b border-slate-950 hover:border-green-500 hover:border-b hover:text-green-500"
@@ -211,7 +199,7 @@ function Stream() {
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2 ">
+          <div className="w-full lg:w-1/2">
             <h2 className="text-green-500 text-lg lg:text-xl font-bold">
               Next Episode
             </h2>
