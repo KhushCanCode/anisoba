@@ -50,7 +50,7 @@ const Search = () => {
     );
   }
   return (
-    <div className="mt-5 flex justify-center items-center flex-col">
+    <div className="mt-20 flex justify-center items-center flex-col ">
       {/* Search Input */}
       <div className="flex justify-center items-center h-fit w-11/12 lg:w-1/2 relative">
         <input

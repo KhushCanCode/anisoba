@@ -87,26 +87,26 @@ const Anime = () => {
 
   return (
     
-    <div className="container mx-auto mt-5">
+    <div className="container mx-auto mt-16">
       
       {/* Anime Data */}
       <div className="flex flex-col lg:flex-row items-start p-2 bg-slate-900 ">
 
         <img src={info?.poster} alt={info?.name} className="w-full lg:w-80 rounded" />
         
-        <div className="ml-2 lg:ml-10 lg:p-2">
+        <div className="ml-2 lg:ml-10 lg:p-2 mt-2">
 
           <h1 className="text-2xl flex-wrap lg:text-4xl font-semibold lg:font-bold">{info?.name}</h1>
-          <div className="flex text-sm lg:text-base text-gray-400 mt-1 lg:mt-3 gap-1">
+          <div className="flex text-sm lg:text-base text-gray-500 mt-1 lg:mt-3 gap-1">
             <p className="">{moreInfo?.aired} | </p>
             <p className="">{moreInfo?.status}</p>
           </div>
 
           <div className="flex items-center mt-2 gap-2">
-          <p className="text-md lg:text-xl ">Rating : <span className="text-green-500">{moreInfo?.malscore}</span></p>
+          <p className="text-md lg:text-xl text-gray-400 ">Rating : <span className="text-green-500">{moreInfo?.malscore}</span></p>
           </div>
           
-          <p className="text-base lg:text-lg mt-3">
+          <p className="text-base lg:text-lg mt-3 text-gray-400">
           {isExpanded ? info?.description : `${info?.description?.substring(0, 300)}...`}
           </p>
           <button className="text-green-500 hover:underline text-base" onClick={toggleDescription}>

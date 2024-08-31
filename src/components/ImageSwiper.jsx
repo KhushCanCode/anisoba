@@ -20,8 +20,8 @@ function ImageSwiper({ animes, heading, subHeading, loading }) {
         <SkeletonTheme baseColor="#070E2A" highlightColor="#111A43">
             <div className="px-3 lg:px-16 relative mt-12 lg:mt-0">
                 <div className="lg:absolute lg:-top-20 z-10 mb-3">
-                    <h2 className="text-2xl lg:text-3xl font-semibold">{heading}</h2>
-                    <p className="text-gray-500 mb-5">{subHeading }</p>
+                    <h2 className="text-xl lg:text-3xl font-semibold">{heading}</h2>
+                    <p className="text-sm text-gray-500 mb-3">{subHeading }</p>
                 </div>
                 <Swiper
                     spaceBetween={20}
@@ -29,7 +29,7 @@ function ImageSwiper({ animes, heading, subHeading, loading }) {
                     freeMode={true}
                     navigation={true}
                     modules={[FreeMode, Navigation]}
-                    className="mySwiper h-64 md:h-96 lg:h-96 custom-swiper-navigation"
+                    className="mySwiper h-64 md:h-96 lg:h-96 cursor-grab custom-swiper-navigation"
                     breakpoints={{
                         0: {
                             slidesPerView: 2.2,
@@ -53,7 +53,7 @@ function ImageSwiper({ animes, heading, subHeading, loading }) {
                             <SwiperSlide
                                 key={anime.id}
                                 onClick={() => animeClicked(anime.id)}
-                                className="h-64 md:h-96 lg:h-96 cursor-pointer"
+                                className="h-64 md:h-96 lg:h-96 cursor-grab"
                             >
                                 <div className="h-5/6 w-full">
                                     {anime.poster ? (

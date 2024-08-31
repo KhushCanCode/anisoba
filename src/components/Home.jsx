@@ -29,13 +29,15 @@ function Home() {
     }, []);
 
     return (
-        <>
+        <div className="bg-slate-950">
+            
             <Slider />
-            <div className="absolute inset-x-0 hidden lg:block lg:-bottom-20 h-1/5 bg-gradient-to-b from-transparent via-slate-950 to-slate-950 z-10"></div>
+            <div className="absolute inset-x-0 hidden  lg:block lg:-bottom-16 h-1/5 bg-gradient-to-b from-transparent via-slate-950 to-slate-950 z-10"></div>
+            <div className="lg:mb-24"></div>
             <ImageSwiper animes={trendingAnimes} heading="Trending Animes" subHeading="Keep up with the buzz and join the conversation." loading={loading} />
             <div className="lg:mb-28"></div>
             <ImageSwiper animes={latestEpisodeAnimes} heading="Latest Episodes" subHeading="Newest Episodes of your favourite animes!" loading={loading} />
-        </>
+        </div>
     );
 }
 

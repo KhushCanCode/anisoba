@@ -94,33 +94,18 @@ function Genres() {
     }, [genreId]);
     
 
-    const genreClicked = (clickedGenreId) => {
-        setSortedGenres(prevGenres => {
-            const clickedGenre = prevGenres.find(genre => genre.id === clickedGenreId);
-            const otherGenres = prevGenres.filter(genre => genre.id !== clickedGenreId);
-            return [clickedGenre, ...otherGenres];
-        });
-    };
+   
 
    
 
     return (
         <>
-            <div className="w-full flex justify-center mt-5 lg:mt-12">
-                <h1 className="text-4xl font-semibold">Genres</h1>
-            </div>
-            <div className="lg:grid hidden lg:grid-cols-11 grid-rows-3 gap-3 mt-5 p-5 635">
-            {genres.map(genre =>(
-                <div key={genre.id} id={genre.id}>
-                    <button 
-                    className="border-white border p-2 bg-slate-950 rounded-3xl hover:border-green-500 hover:text-green-500 "
-                    onClick={() => genreClicked(genre.id)}>{genre.id}</button>
-                </div>
-            ))}
+            <div className="w-full flex justify-center mt-20">
+                <h1 className="text-2xl lg:text-4xl font-semibold">Genres</h1>
             </div>
             
             
-            {sortedGenres.map(genre => (
+            {genres.map(genre => (
                 <div key={genre.id} id={genre.id} className="my-8">
                     <div className="-mt-4 lg:mt-28"></div>
                    

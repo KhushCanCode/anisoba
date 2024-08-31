@@ -45,8 +45,8 @@ function Categories() {
 
     return (
         <>
-            <div className="w-full flex justify-center mt-5 lg:mt-12">
-                <h1 className="text-4xl font-semibold">Categories</h1>
+            <div className="w-full flex justify-center mt-20">
+                <h1 className="text-2xl lg:text-4xl font-semibold">Categories</h1>
             </div>
             
             {categories.map(category => (

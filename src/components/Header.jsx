@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom'
 
 function Header() {
@@ -10,20 +10,39 @@ function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <nav className="px-4 lg:px-6 py-2.5 bg-gray-900">
+        <nav
+          id="navbar"
+          className={`px-4 lg:px-6 py-2.5 fixed top-0 z-10 w-full transition-all duration-300 ${
+            isScrolled ? 'bg-opacity-70 backdrop-blur-md' : 'bg-transparent'
+          }`}
+        >
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <span className="text-xl pl-2 lg:text-2xl font-bold whitespace-nowrap text-white">V<span className="text-green-500">O</span>D</span>
           </Link>
 
-          <div className="flex items-center lg:order-2">
+          <div className="flex items-center lg:order-2 ">
             <Link to='/search' className="text-white hover:text-green-400 font-medium rounded-lg text-sm mr-6"><i className="fa-solid fa-magnifying-glass"></i></Link>
             <a href="#" className="text-white hover:text-green-400 font-medium rounded-lg text-sm md:mr-6 lg:mr-6"><i className="fa-regular fa-user"></i></a>
             <a href="#" className="text-white hover:text-green-400 font-medium rounded-lg text-sm hidden md:block lg:block"><i className="fa-solid fa-arrow-right-from-bracket"></i></a>
 
-            <button onClick={toggleMenu} type="button" className="inline-flex items-center p-2 ml-2 text-sm text-white rounded-lg lg:hidden hover:text-green-400">
+            <button onClick={toggleMenu} type="button" className="inline-flex items-center p-2 ml-2 text-sm text-white bg-transparent rounded-lg lg:hidden hover:text-green-400">
               <svg className={`w-6 h-6 ${isMenuOpen ? 'hidden' : 'block'}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path>
               </svg>
@@ -33,14 +52,14 @@ function Header() {
             </button>
           </div>
 
-          <div className={`justify-between items-center w-full lg:flex lg:w-auto lg:order-1 ${isMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu-2">
+          <div className={`justify-between items-center w-full   lg:flex lg:w-auto lg:order-1 ${isMenuOpen ? 'block bg-slate-950' : 'hidden'}`} id="mobile-menu-2">
             <ul className="flex flex-col self-start mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               
               <li>
-                <Link to="/categories" className="block py-2 pr-4 pl-3 text-slate-200 hover:text-green-400 lg:hover:border-b lg:hover:border-green-400 ">Categories</Link>
+                <Link to="/categories" className="block py-2 pr-4 pl-3 text-slate-200 rounded-3xl transition hover:backdrop-blur-sm ">Categories</Link>
               </li>
               <li>
-                <Link to="/genres/:genreId" className="block py-2 pr-4 pl-3 text-slate-200 hover:text-green-400 lg:hover:border-b lg:hover:border-green-400 ">Genres</Link>
+                <Link to="/genres/:genreId" className="block py-2 pr-4 pl-3 text-slate-200 rounded-3xl transition hover:backdrop-blur-sm ">Genres</Link>
               </li>
             </ul>
           </div>

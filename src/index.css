@@ -28,9 +28,13 @@ body{
   
   color:white;
   z-index:20;
+  background-color: #0000004f;
+
+
+}
+.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-prev:hover{
   background-color: #00000076;
-
-
 }
 .custom-swiper-navigation .swiper-button-next{
   right:0;
@@ -41,8 +45,9 @@ body{
 
 .custom-swiper-navigation .swiper-button-next::after,
 .custom-swiper-navigation .swiper-button-prev::after {
-  font-size: 1.2rem; 
+  font-size: 1rem; 
   font-weight: 800;
+  
 }
 
 
@@ -58,8 +63,8 @@ body{
   }
   .custom-swiper-navigation .swiper-button-next::after,
   .custom-swiper-navigation .swiper-button-prev::after {
-  font-size: 1rem; 
-  font-weight: 800;
+  font-size: 0.5rem; 
+  font-weight: 700;
 }
 }
 
@@ -72,6 +77,11 @@ body{
   .slide{
     height:50vh;
   }
+  .custom-swiper-navigation .swiper-button-next::after,
+  .custom-swiper-navigation .swiper-button-prev::after {
+  font-size: 0.5rem; 
+  font-weight: 700;
+}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

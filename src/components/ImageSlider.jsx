@@ -71,7 +71,7 @@ function Slider() {
 
   return (
     <>
-  <div className="slide w-full">
+  <div className="slide w-full ">
   <Carousel autoPlay={true} infiniteLoop={true} interval={3000} showThumbs={false} showStatus={false}>
 
     {animeList.map((anime) => (
@@ -82,7 +82,7 @@ function Slider() {
         
         <div className=" md:ml-20 lg:ml-20 text-left flex flex-col justify-center items-center md:block lg:block">
 
-            <h2 className="text-4xl  lg:text-5xl font-bold ">{anime.name}</h2>
+            <h2 className="text-3xl  lg:text-5xl font-bold ">{anime.name}</h2>
             {anime.episodes.sub > 0 && anime.episodes.dub > 0 ? (
                         <p className="text-gray-400 md:mt-4 lg:mt-4">Sub | Dub</p>
                       ) : anime.episodes.sub > 0 ? (
@@ -95,11 +95,11 @@ function Slider() {
             <p className="hidden md:block lg:block mt-3 md:pr-1 pr-10">{anime.description}</p>
 
             <div className="mt-2 md:mt-4 lg:mt-5 flex gap-2 items-center">
-              <button className=" bg-green-500  text-gray-900  text-lg font-semibold py-2 px-3 lg:px-6 rounded hover:bg-gray-500"
+              <button className=" bg-green-500  text-gray-900 text-base lg:text-lg font-semibold py-2 px-3 lg:px-6 rounded hover:bg-gray-500"
               onClick={() => animeClicked(anime.id)}>
-              <i class="fa-solid fa-caret-right text-gray-900 mr-4 "></i>
+              <i class="fa-solid fa-caret-right text-gray-900 mr-3 "></i>
                 Watch Now</button>
-              <i class="fa-regular fa-bookmark text-2xl text-green-500  py-1 px-2 rounded  border-green-500 border-2 hover:bg-gray-500 hover:text-white hover:border-gray-500"></i>
+              <i class="fa-regular fa-bookmark text-lg lg:text-2xl text-green-500  py-1 px-2 rounded  border-green-500 border-2 hover:bg-gray-500 hover:text-white hover:border-gray-500"></i>
 
             </div>
           
