@@ -137,7 +137,7 @@ const Anime = () => {
           {moreInfo?.genres?.map((genre, index) => (
               <li 
                   key={index} 
-                  className="p-2 bg-green-700 cursor-pointer" 
+                  className="p-2 bg-green-700 cursor-pointer hover:bg-green-500" 
                   onClick={() =>  genreClicked(genre.toLowerCase())}
               >
                   {genre}
@@ -164,7 +164,7 @@ const Anime = () => {
     <div className="lg:flex gap-10 ">
          {/* Anime Episodes */}
       <div className="px-3 lg:px-0 py-5 lg:py-10 lg:w-1/2"> 
-      <h2 className="text-green-500 text-lg lg:text-xl font-bold">Episodes | Total - {totalEpisodes}</h2>
+      <h2 className="text-green-500 text-lg lg:text-xl font-bold ">Episodes | Total - {totalEpisodes}</h2>
       <ul className="mt-4">
         {animeEpisodes?.slice(0, visibleEpisodes).map((episode) => (
           <li key={episode.episodeId}

@@ -172,7 +172,7 @@ function Stream() {
                   <select
                     value={category}
                     onChange={handleCategoryChange}
-                    className="p-1 mt-1 lg:p-2 bg-slate-800 text-white rounded"
+                    className="p-1 mt-1 lg:p-2 bg-slate-800 text-white rounded cursor-pointer"
                   >
                     <option value="sub">Sub</option>
                     <option value="dub">Dub</option>
@@ -181,33 +181,25 @@ function Stream() {
               </div>
 
               <button
-                className="text-base lg:text-xl text-gray-500 mt-1 border-b border-slate-950 hover:border-green-500 hover:border-b hover:text-green-500"
+                className="text-base lg:text-xl text-green-500 mt-1 border-b border-slate-950 hover:border-green-500 hover:border-b "
                 onClick={() => animeClicked(animeId)}
               >
                 {info?.name}
               </button>
 
-              {info?.stats?.episodes?.sub && info?.stats?.episodes?.dub ? (
-                <p className="text-gray-500 text-xs">Sub | Dub</p>
-              ) : info?.stats?.episodes?.sub ? (
-                <p className="text-gray-500 text-xs">Sub</p>
-              ) : info?.stats?.episodes?.dub ? (
-                <p className="text-gray-500 text-xs">Dub</p>
-              ) : (
-                <p className="text-gray-500 text-xs">Not Available</p>
-              )}
+             
             </div>
           </div>
 
           <div className="w-full lg:w-1/2">
-            <h2 className="text-green-500 text-lg lg:text-xl font-bold">
+            <h2 className="text-gray-500 text-lg lg:text-xl font-bold">
               Next Episode
             </h2>
             {nextEpisode && (
               <li
                 key={nextEpisode.episodeId}
                 onClick={() => episodeClicked(nextEpisode.episodeId)}
-                className="cursor-pointer bg-slate-900 my-2 px-2 py-4 rounded gap-2 flex justify-between items-center hover:bg-green-700"
+                className="cursor-pointer bg-slate-900 my-2 px-2 py-4 rounded gap-2 flex justify-between items-center hover:bg-slate-600"
               >
                 <p>
                   Ep-{nextEpisode.number} {nextEpisode.title}
