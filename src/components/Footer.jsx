@@ -2,7 +2,7 @@
 function Footer(){
     return(
         <>
-        <footer className=" bg-gradient-to-t  from-green-800  to-slate-950  mt-10">
+        <footer className=" bg-slate-950  mt-10">
         <div className="mx-auto w-full max-w-screen-xl">
                 <p className="text-green-500 text-sm pl-4 pt-8">Questions? Call 1-844-505-2993</p>
             <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
