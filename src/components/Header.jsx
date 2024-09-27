@@ -34,7 +34,7 @@ function Header() {
         >
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
-            <span className="text-xl pl-2 lg:text-2xl font-bold whitespace-nowrap text-white">V<span className="text-green-500">O</span>D</span>
+            <span className="text-xl pl-2 lg:text-2xl font-bold whitespace-nowrap text-white"><span className="text-green-500">Ani</span>Soba</span>
           </Link>
 
           <div className="flex items-center lg:order-2 ">

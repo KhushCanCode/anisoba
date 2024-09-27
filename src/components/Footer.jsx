@@ -75,7 +75,7 @@ function Footer(){
             </div>
 
             <div className="px-4 py-6 md:flex md:items-center md:justify-between">
-                <span className="text-xl font-bold text-gray-800 sm:text-center"><a href="#">VOD™ India</a>
+                <span className="text-xl font-bold text-gray-600 sm:text-center"><a href="#">Anisoba India</a>
                 </span>
 
                 <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">

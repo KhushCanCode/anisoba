@@ -52,7 +52,6 @@ function Genres() {
     const { genreId } = useParams();
     const [animeData, setAnimeData] = useState({});
     const [loading, setLoading] = useState({}); 
-    const [sortedGenres, setSortedGenres] = useState(genres);
 
     const fetchGenresAnimes = async (genreId) => {
         try {
