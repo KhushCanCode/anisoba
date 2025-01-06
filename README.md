@@ -13,14 +13,12 @@ Learned about video player
 Implemented search functionality.
 
 ## 🌟 Features
-
-### Api used
+Api used:
 https://github.com/ghoshRitesh12/aniwatch-api
 
-### Search Functionality
-Quickly search for your favorite anime and access detailed information.
+Search Functionality: Quickly search for your favorite anime and access detailed information.
 
-### Anime Details:
+Anime Details:
 Airing date
 Genres
 Episodes
@@ -28,21 +26,16 @@ Seasons
 Movies
 Recommendations
 
-### Genre Exploration
-Click on any genre to explore more anime within that category.
+Genre Exploration: Click on any genre to explore more anime within that category.
+Categories: Browse through various categories to find anime that suits your mood.
+High-Quality Streaming: Stream anime online in full quality for an immersive viewing experience.
 
-### Categories
-Browse through various categories to find anime that suits your mood.
-
-### High-Quality Streaming
-Stream anime online in full quality for an immersive viewing experience.
-
-### 🛠️ Technology Stack
+## 🛠️ Technology Stack
 Frontend: React.js
 Backend: Node.js (Express.js)
 Hosting: Vercel
 
-### 📈 Future Enhancements
+## 📈 Future Enhancements
 User authentication for personalized watchlists.
 Notifications for new episodes or upcoming seasons.
 Offline viewing support.
