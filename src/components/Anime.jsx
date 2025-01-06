@@ -106,7 +106,7 @@ const Anime = () => {
 
   return (
     
-    <div className="container mx-auto mt-16">
+    <div className="container mx-auto mt-16 p-6">
       
       {/* Anime Data */}
       <div className="flex flex-col lg:flex-row items-start p-2 bg-slate-900 ">
