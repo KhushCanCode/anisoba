@@ -1,4 +1,6 @@
 # Anisoba
+
+## Description
 Anisoba is an elegant and user-friendly anime streaming platform designed for anime enthusiasts. Explore your favorite anime, dive into detailed information, and stream content seamlessly in full quality.
 
 ## Deployed Link
