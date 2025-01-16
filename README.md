@@ -27,7 +27,9 @@ Movies
 Recommendations
 
 Genre Exploration: Click on any genre to explore more anime within that category.
+
 Categories: Browse through various categories to find anime that suits your mood.
+
 High-Quality Streaming: Stream anime online in full quality for an immersive viewing experience.
 
 ## 🛠️ Technology Stack
